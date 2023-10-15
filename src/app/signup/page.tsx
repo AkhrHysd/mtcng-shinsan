@@ -1,9 +1,10 @@
+import { FormSignUp } from "../components/FormSignUp"
 
 
 const page = async () => {
     return (
         <div >
-            サインアップページ
+            <FormSignUp />
         </div>
     )
 }
