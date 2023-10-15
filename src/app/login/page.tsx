@@ -19,7 +19,6 @@ export default async function Home() {
                 <div>{`${JSON.stringify(user)}`}</div>
                 {user ? <div>Logged in</div> : <div>Not logged in</div>}
                 {user ? <LogoutButton/> : <LoginButton/>}
-                {userData ? <div>{userData.email}</div> : <p>signUp</p>}
             </div>
         </main>
     );
