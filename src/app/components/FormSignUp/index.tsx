@@ -3,6 +3,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema, SignupSchemaType } from "./inputSchema";
 import { FC } from "react";
+import { createUser } from "../createUser";
 
 export type Props = {
     defaultValues?: SignupSchemaType
@@ -10,7 +11,7 @@ export type Props = {
 
 export const FormSignUp: FC<Props> = ({defaultValues}) => {
 
-    const { control, handleSubmit, formState: { errors } } = useForm({
+    const { control,  formState: { errors } } = useForm({
         defaultValues: defaultValues || {
           email: '',
           familyName: '',
@@ -19,14 +20,11 @@ export const FormSignUp: FC<Props> = ({defaultValues}) => {
         resolver: zodResolver(SignupSchema)
       });
 
-      const onSubmit = async (data: any) => {
-        console.log(data)
-      }
 
 
       return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8s">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form action={(data) => createUser(data)}>
 
           <div className="flex flex-col sm:flex-row">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
