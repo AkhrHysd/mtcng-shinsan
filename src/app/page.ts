@@ -2,16 +2,17 @@ import { findUserByEmail } from '../../prisma/user'
 import {getServerSession} from "next-auth/next";
 import {options} from "@/app/options";
 import { redirect } from "next/navigation";
+import { authCheck } from './utils/authCheck';
+import { checkFirstLogin } from './utils/checkFirstLogin';
 
 const Page = async () => {
-  const session = await getServerSession(options)
-  const user = session?.user
+  const auth = await authCheck()
+  const firstLogin = await checkFirstLogin()
 
-  const userData = await findUserByEmail(session?.user?.email || '')
-  console.log(userData)
-
-  if(user) {
+  if(!auth) {
     redirect('/dashboard')
+  } else if (firstLogin) {
+    redirect('/signup')
   } else {
     redirect('/login')
   }
