@@ -11,7 +11,11 @@ export type Props = {
 export const FormSignUp: FC<Props> = ({defaultValues}) => {
 
     const { control, handleSubmit, formState: { errors } } = useForm({
-        defaultValues: defaultValues,
+        defaultValues: defaultValues || {
+          email: '',
+          familyName: '',
+          firstName: '',
+        },
         resolver: zodResolver(SignupSchema)
       });
 
@@ -21,27 +25,41 @@ export const FormSignUp: FC<Props> = ({defaultValues}) => {
 
 
       return (
-        <form  onSubmit={handleSubmit(onSubmit)}>
-          <Controller 
-            name="email"
-            control={control}
-            render={({ field }) => <input {...field} type="email" />}
-          />
-          {errors.email && <p>Invalid email address</p>}
-          <Controller 
-            name="firstName"
-            control={control}
-            render={({ field }) => <input {...field} type="firstName" />}
-          />
-          {errors.firstName && <p>Invalid firstName address</p>}
-          <Controller 
-            name="familyName"
-            control={control}
-            render={({ field }) => <input {...field} type="familyName" />}
-          />
-          {errors.familyName && <p>Invalid familyName address</p>}
-          <button type="submit">Signup</button>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8s">
+        <form onSubmit={handleSubmit(onSubmit)}>
+
+          <div className="flex flex-col sm:flex-row">
+            <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+            <Controller 
+              name="email"
+              control={control}
+              render={({ field }) => <input {...field} type="email" className="text-gray-700 mt-1 sm:mt-0 sm:ml-3 flex-grow rounded-md" />}
+            />
+            {errors.email && <p  className="text-red-600 text-sm">Invalid email address</p>}
+          </div>
+          <div className="flex flex-col sm:flex-row">
+          <div className="flex-grow">
+            <label htmlFor="familyName" className="block text-sm font-medium text-gray-700">姓</label>
+            <Controller 
+              name="familyName"
+              control={control}
+              render={({ field }) => <input {...field} type="familyName" className="text-gray-700 mt-1 rounded-md" />}
+            />
+            {errors.familyName && <p className="text-red-600 text-sm">Invalid familyName address</p>}
+          </div>
+          <div className="flex-grow">
+            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">名</label>
+            <Controller 
+              name="firstName"
+              control={control}
+              render={({ field }) => <input {...field} type="firstName" className="text-gray-700 mt-1 rounded-md" />}
+            />
+            {errors.firstName && <p className="text-red-600 text-sm">Invalid firstName</p>}
+          </div>
+          </div>
+          <button type="submit">登録する</button>
 
         </form>
+        </div>
       )
 }
