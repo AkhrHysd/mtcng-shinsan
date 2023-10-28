@@ -1,6 +1,4 @@
-import { findUserByEmail } from '../../prisma/user'
-import {getServerSession} from "next-auth/next";
-import {options} from "@/app/options";
+
 import { redirect } from "next/navigation";
 import { authCheck } from './utils/authCheck';
 import { checkFirstLogin } from './utils/checkFirstLogin';
@@ -10,11 +8,11 @@ const Page = async () => {
   const firstLogin = await checkFirstLogin()
 
   if(!auth) {
-    redirect('/dashboard')
+    redirect('/login')
   } else if (firstLogin) {
     redirect('/signup')
   } else {
-    redirect('/login')
+    redirect('/dashboard')
   }
 
 }

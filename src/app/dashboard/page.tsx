@@ -4,13 +4,13 @@ import { redirect } from "next/navigation";
 import { checkFirstLogin } from "../utils/checkFirstLogin";
 
 export default async function Home() {
-    const auth = await authCheck()
-    const firstLogin = await checkFirstLogin()
-    if(!auth) {
-        redirect('/login')
-    } else if (firstLogin) {
-        redirect('/signup')
-    }
+    // const auth = await authCheck()
+    // const firstLogin = await checkFirstLogin()
+    // if(!auth) {
+    //     redirect('/login')
+    // } else if (firstLogin) {
+    //     redirect('/signup')
+    // }
 
     return (
         <main>

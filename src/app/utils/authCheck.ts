@@ -6,7 +6,7 @@ export const authCheck = async () => {
     const session = await getServerSession(options)
     const user = session?.user
     const userData = await findUserByEmail(session?.user?.email || '')
-    console.error(userData)
+    console.error('userData', userData)
 
     if (!user) {
         return false

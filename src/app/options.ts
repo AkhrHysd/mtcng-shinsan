@@ -1,7 +1,5 @@
 import type {NextAuthOptions} from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import CredentialsProvider from "next-auth/providers/credentials";
 
 export const options: NextAuthOptions = {
         debug: true,
@@ -13,12 +11,11 @@ export const options: NextAuthOptions = {
             }),
         ],
         callbacks: {
-            jwt: async ({token, user, account, profile, isNewUser}) => {
-                // 注意: トークンをログ出力してはダメです。
-                console.log('in jwt', {user, token, account, profile})
+            jwt: async ({token, user, account}) => {
 
                 if (user) {
                     token.user = user;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- 
                     const u = user as any
                     token.role = u.role;
                 }
@@ -28,7 +25,6 @@ export const options: NextAuthOptions = {
                 return token;
             },
             session: ({session, token}) => {
-                console.log("in session", {session, token});
                 token.accessToken
                 return {
                     ...session,

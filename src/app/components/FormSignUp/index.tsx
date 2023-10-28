@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SignupSchema, SignupSchemaType } from "./inputSchema";
 import { FC } from "react";
 import { createUser } from "../createUser";
+import { redirect } from "next/navigation";
 
 export type Props = {
     defaultValues?: SignupSchemaType
@@ -24,7 +25,15 @@ export const FormSignUp: FC<Props> = ({defaultValues}) => {
 
       return (
         <div className="container mx-auto px-4 sm:px-6 lg:px-8s">
-        <form action={(data) => createUser(data)}>
+        <form action={async (data) => {
+          const res =  await createUser(data)
+          if(res.status === 'SUCCESS') {
+            console.error('success')
+            redirect('/dashboard')
+          } else if (res.status === 'ERROR') {
+            console.error('error')
+          }
+          }}>
 
           <div className="flex flex-col sm:flex-row">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
